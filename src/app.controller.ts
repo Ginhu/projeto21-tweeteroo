@@ -8,6 +8,7 @@ import {
 } from '@nestjs/common';
 import { AppService } from './app.service';
 import { SignUpDto } from './dto/user.dto';
+import { TweetDto } from './dto/tweet.dto';
 
 @Controller()
 export class AppController {
@@ -22,5 +23,11 @@ export class AppController {
   @HttpCode(HttpStatus.OK)
   postSignUp(@Body() body: SignUpDto) {
     return this.appService.postSignUp(body);
+  }
+
+  @Post('/tweets')
+  @HttpCode(HttpStatus.CREATED)
+  postTweet(@Body() body: TweetDto) {
+    return this.appService.postTweet(body);
   }
 }
