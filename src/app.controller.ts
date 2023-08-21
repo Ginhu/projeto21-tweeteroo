@@ -4,6 +4,7 @@ import {
   Get,
   HttpCode,
   HttpStatus,
+  Param,
   Post,
   Query,
 } from '@nestjs/common';
@@ -16,6 +17,7 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
+  @HttpCode(HttpStatus.OK)
   getHello(): string {
     return this.appService.getHello();
   }
@@ -36,5 +38,11 @@ export class AppController {
   @HttpCode(HttpStatus.OK)
   getTweets(@Query('page') page: string) {
     return this.appService.getTweets(page);
+  }
+
+  @Get('/tweets/:username')
+  @HttpCode(HttpStatus.OK)
+  getTweetsUser(@Param('username') username: string) {
+    return this.appService.getTweetsUser(username);
   }
 }

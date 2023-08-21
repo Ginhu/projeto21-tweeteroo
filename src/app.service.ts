@@ -14,7 +14,7 @@ export class AppService {
     this.tweets = [];
   }
   getHello(): string {
-    return 'Hello World!';
+    return "I'm okay!";
   }
 
   postSignUp(body: SignUpDto) {
@@ -57,6 +57,21 @@ export class AppService {
 
     const tweetsReverse = tweets.reverse();
 
-    return tweetsReverse.slice(paginacao * 15 - 15, paginacao * 15 - 1);
+    return tweetsReverse.slice(paginacao * 15 - 15, paginacao * 15);
+  }
+
+  getTweetsUser(username: string) {
+    const tweetsUser = this.tweets.filter(
+      (el) => el.user.username === username,
+    );
+
+    const tweetsUserFormated = tweetsUser.map((el) => {
+      const username = el.user.username;
+      const avatar = el.user.avatar;
+      const tweet = el.tweeet;
+      return { username, avatar, tweet };
+    });
+
+    return tweetsUserFormated;
   }
 }
