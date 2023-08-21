@@ -33,4 +33,30 @@ export class AppService {
       return this.tweets.push(tweet);
     }
   }
+
+  getTweets(page: string) {
+    let paginacao: number;
+    if (!page) {
+      paginacao = 1;
+    } else if (Number(page) < 1 || isNaN(Number(page))) {
+      throw new HttpException(
+        'Informe uma página válida!',
+        HttpStatus.BAD_REQUEST,
+      );
+    } else {
+      paginacao = Number(page);
+    }
+
+    const tweets = this.tweets.map((el) => {
+      const username = el.user.username;
+      const avatar = el.user.avatar;
+      const tweet = el.tweeet;
+
+      return { username, avatar, tweet };
+    });
+
+    const tweetsReverse = tweets.reverse();
+
+    return tweetsReverse.slice(paginacao * 15 - 15, paginacao * 15 - 1);
+  }
 }

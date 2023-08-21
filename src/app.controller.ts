@@ -5,6 +5,7 @@ import {
   HttpCode,
   HttpStatus,
   Post,
+  Query,
 } from '@nestjs/common';
 import { AppService } from './app.service';
 import { SignUpDto } from './dto/user.dto';
@@ -29,5 +30,11 @@ export class AppController {
   @HttpCode(HttpStatus.CREATED)
   postTweet(@Body() body: TweetDto) {
     return this.appService.postTweet(body);
+  }
+
+  @Get('/tweets')
+  @HttpCode(HttpStatus.OK)
+  getTweets(@Query('page') page: string) {
+    return this.appService.getTweets(page);
   }
 }
